@@ -1,4 +1,8 @@
 <?php
+require_once 'google-config.php';
+$client = getGoogleClient();
+$authUrl = $client->createAuthUrl();
+
 $is_invalid = false;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
@@ -35,6 +39,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        .google-btn {
+            display: inline-block;
+            background: #4285f4;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .google-btn:hover {
+            background: #357ae8;
+        }
+    </style>
 </head>
 <body>
     <?php if ($is_invalid): ?>
@@ -42,6 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endif; ?>
 
     <h1>Login</h1>
+    
+    <!-- Regular login form -->
     <form method="post">
         <div>
             <input type="email" id="email" name="email" placeholder="Email Address" 
@@ -52,6 +72,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
         <button>Login</button>
     </form>
+
+    <!-- Google Sign-In button -->
+    <div>
+        <a href="<?= htmlspecialchars($authUrl) ?>" class="google-btn">
+            Sign in with Google
+        </a>
+    </div>
 </body>
 </html>
 

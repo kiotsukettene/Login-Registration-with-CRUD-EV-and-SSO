@@ -69,17 +69,17 @@ try {
     $mail = new PHPMailer(true);
 
     try {
-        // Server settings
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com'; // Gmail SMTP server
+        $mail->Host = $_ENV['SMTP_HOST'];
         $mail->SMTPAuth = true;
-        $mail->Username = 'pelirramos@gmail.com'; // Replace with YOUR Gmail address
-        $mail->Password = 'nyey clsf yyat yyyv'; // Your app password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail->Username = $_ENV['SMTP_USERNAME'];
+        $mail->Password = $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = $_ENV['SMTP_PORT'];
+        
+        $mail->setFrom($_ENV['SMTP_FROM'], $_ENV['SMTP_FROM_NAME']);
         
         // Recipients
-        $mail->setFrom('pelirramos@gmail.com', 'Email Verification'); // Use same Gmail address
         $mail->addAddress($_POST["email"]);
 
         // Content
